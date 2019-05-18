@@ -1,3 +1,94 @@
+# Modified `cors-anywhere` repo
+
+> ###### Note: The original repo's README is at the bottom of page
+
+A NodeJS proxy which is used to work around CORS restrictions of websites.
+
+Exactly the same as the original `cors-anywhere` repo besides one additional key feature:
+- the ability to **escape restricted headers**
+
+<br>
+
+## Table of Contents
+
+> - [Example usage](#Example-usage)
+>   - [The `Problem`](#The-Problem)
+>   - [The `Solution`](#The-Solution)
+> - [Setting up proxy on `Heroku` cloud platform](#Setting-up-proxy-on-Heroku-cloud-platform)
+> - [Original repo's README](#original-readme)
+
+<br>
+
+## Example usage
+
+### The `Problem`:
+> ###### [back to _Contents_](#Table-of-Contents)
+
+When trying to send a HTTP request _via_ your browser, with the following headers:
+
+```
+[Header]     : [Value]
+-----------------------------
+ Origin      : 'https://example.com'
+ Referer     : 'https://example.com/subdirectory'
+ User-Agent  : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36'
+```
+
+It will print this error to the console:
+
+```diff
+- Refused to set unsafe header "[header_name]"
+```
+
+<br>
+
+### The `Solution`:
+> ###### [back to _Contents_](#Table-of-Contents)
+
+Escape the restricted headers in the HTTP request with a `-` prefix as shown:
+
+```
+[Header]     : [Value]
+-----------------------------
+ -Origin      : 'https://example.com'
+ -Referer     : 'https://example.com/subdirectory'
+ -User-Agent  : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36'
+```
+
+and send it to the cors-anywhere proxy; where it will unescape the headers before sending it to the destination URL.
+
+> **Note:** This will overwrite any existing headers with the same name _(eg. replacing the `Origin` value set by your browser with the `-Origin` value)_. 
+
+<br>
+
+
+## Setting up proxy on `Heroku` cloud platform
+> ###### [back to _Contents_](#Table-of-Contents)
+
+- Fork this repo to your Github account
+- Create a `Heroku` account [https://www.heroku.com]
+- Create a new app [https://dashboard.heroku.com/new-app]
+- Navigate:
+    - >**>** on your new app page
+<br>**>** `Deploy` tab
+<br>**>** `Deployment method` section 
+<br>**>** `Connect to Github` button 
+<br>**>** enter your Github credentials 
+<br>**>** search for and connect to your forked repo 
+<br>**>** `Manual deploy` section _(also under `Deploy` tab)_ 
+<br>**>** select `master` branch 
+<br>**>** `Deploy Branch` button
+- DONE
+
+To use your proxy, simply append your target URL to the back of your app URL _(eg. https://your-app-name.herokuapp.com/https://targeturl.com/subdirectory)_
+
+_(to get your app URL, click on the `Open app` button on the top right of your app page)_
+
+<br>
+
+<details id="original-readme">
+    <summary><b>Click to view:</b> original repo's README</summary>
+    
 [![Build Status](https://travis-ci.org/Rob--W/cors-anywhere.svg?branch=master)](https://travis-ci.org/Rob--W/cors-anywhere)
 [![Coverage Status](https://coveralls.io/repos/github/Rob--W/cors-anywhere/badge.svg?branch=master)](https://coveralls.io/github/Rob--W/cors-anywhere?branch=master)
 
@@ -179,3 +270,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+    
+</details>
