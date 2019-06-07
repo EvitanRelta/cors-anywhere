@@ -1,6 +1,6 @@
 # Modified `cors-anywhere` repo
 
-> ###### Note: The original repo's README is at the bottom of page
+> ###### Note: The original repo's README is at the [bottom of page](#original-readme)
 
 A NodeJS proxy which is used to work around CORS restrictions of websites.
 
